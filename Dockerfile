@@ -3,7 +3,8 @@ FROM --platform=amd64 node:18-alpine as backendbuild
 
 WORKDIR /backend
 
-COPY /backend/package*.json .
+COPY /backend/package.json .
+COPY /backend/package-lock.json .
 
 RUN npm install
 
@@ -12,12 +13,13 @@ COPY /backend .
 RUN npm run build
 
 # Build for React. Converts TSX and React into a static html bundle
-FROM --platform=arm64 node:18-alpine as frontendbuild
+FROM --platform=amd64 node:18-alpine as frontendbuild
 # FROM --platform=amd64 node:18-alpine as frontendbuild
 
 WORKDIR /frontend
 
-COPY frontend/package*.json .
+COPY frontend/package.json .
+COPY frontend/package-lock.json .
 
 RUN npm install --legacy-peer-deps
 
@@ -61,7 +63,8 @@ ENV AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
 
 WORKDIR /api
 
-COPY /backend/package*.json .
+COPY /backend/package.json .
+COPY /backend/package-lock.json .
 
 COPY /backend/.sequelizerc .
 
