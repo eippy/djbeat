@@ -6,6 +6,7 @@ import { check } from 'express-validator'
 import { handleValidationErrors } from "../../utils/validation";
 import { singleMulterUpload, singlePublicFileUpload } from "../../utils/aws-sdk";
 import { CustomeRequest } from "../../typings/express";
+import { requireAuth } from "../../utils/auth";
 
 const validateCreateSong = [
     check('title')
@@ -143,5 +144,38 @@ router.get('/:songId', async (req: Request, res: Response, next: NextFunction) =
     }
 })
 
+// DELETE A SONG
+router.delete('/:songId', requireAuth, async (req: CustomeRequest, res: Response, next: NextFunction) => {
+    try {
+        const { songId } = req.params;
+        if (!req.user) {
+            return res.status(404).json({
+                message: "Unauthorized"
+            })
+        }
+
+        const songToDelete = await Song.findByPk(songId);
+
+        if (!songToDelete) {
+            return res.status(404).json({
+                message: "Song couldn't be found"
+            })
+        }
+
+        if (req.user.id !== songToDelete.ownerId) {
+            return res.status(403).json({
+                message: "You do not own this song"
+            });
+        }
+
+        await songToDelete.destroy();
+
+        return res.status(200).json({
+            message: "Successfully deleted"
+        })
+    } catch (error) {
+        next(error)
+    }
+})
 
 export = router
