@@ -179,6 +179,8 @@ router.put('/:songId', requireAuth, validateCreateSong, async (req: CustomeReque
     return res.status(200).json(songToUpdate)
 })
 
+
+
 // DELETE A SONG
 router.delete('/:songId', requireAuth, async (req: CustomeRequest, res: Response, next: NextFunction) => {
     try {
@@ -212,6 +214,5 @@ router.delete('/:songId', requireAuth, async (req: CustomeRequest, res: Response
         next(error)
     }
 })
-  
-  
+
 export = router
