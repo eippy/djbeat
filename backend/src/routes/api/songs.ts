@@ -142,9 +142,9 @@ router.get('/:songId', async (req: Request, res: Response, next: NextFunction) =
     } catch (error) {
         next(error);
     }
-})
-
+  
 // EDIT A SONG 
+
 
 router.put('/:songId', requireAuth, validateCreateSong, async (req: CustomeRequest, res: Response, next: NextFunction) => {
     const { songId } = req.params;
@@ -179,6 +179,8 @@ router.put('/:songId', requireAuth, validateCreateSong, async (req: CustomeReque
     return res.status(200).json(songToUpdate)
 })
 
+
+
 // DELETE A SONG
 router.delete('/:songId', requireAuth, async (req: CustomeRequest, res: Response, next: NextFunction) => {
     try {
@@ -212,4 +214,5 @@ router.delete('/:songId', requireAuth, async (req: CustomeRequest, res: Response
         next(error)
     }
 })
+
 export = router
