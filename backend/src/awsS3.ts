@@ -86,7 +86,7 @@ const singleMulterUpload = (nameOfKey: any) => //'image' comes in
 const multipleMulterUpload = (nameOfKey: any) =>
     multer({ storage: storage }).array(nameOfKey);
 
-module.exports = {
+export {
     s3,
     singlePublicFileUpload,
     multiplePublicFileUpload,

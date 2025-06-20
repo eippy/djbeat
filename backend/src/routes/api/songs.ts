@@ -4,7 +4,7 @@ const router = require('express').Router();
 const { Song, User } = db;
 import { check } from 'express-validator'
 import { handleValidationErrors } from "../../utils/validation";
-import { singleMulterUpload, singlePublicFileUpload } from "../../utils/aws-sdk";
+import { singlePublicFileUpload, singleMulterUpload} from '../../awsS3'
 import { CustomeRequest } from "../../typings/express";
 import { requireAuth } from "../../utils/auth";
 
@@ -142,6 +142,41 @@ router.get('/:songId', async (req: Request, res: Response, next: NextFunction) =
     } catch (error) {
         next(error);
     }
+  
+// EDIT A SONG 
+
+
+router.put('/:songId', requireAuth, validateCreateSong, async (req: CustomeRequest, res: Response, next: NextFunction) => {
+    const { songId } = req.params;
+    const { title, description, previewImage } = req.body;
+
+    if (!req.user) {
+        return res.status(401).json({
+            message: "Unauthorized"
+        })
+    }
+
+    const songToUpdate = await Song.findByPk(songId);
+
+    if (!songToUpdate) {
+        return res.status(404).json({
+            message: "Song couldn't be found"
+        })
+    }
+
+    if (req.user.id !== songToUpdate.ownerId) {
+        return res.status(403).json({
+            message: "You do not own this song"
+        })
+    }
+
+    await songToUpdate.update({
+        title: title,
+        description: description,
+        previewImage: previewImage,
+    });
+
+    return res.status(200).json(songToUpdate)
 })
 
 // DELETE A SONG
@@ -177,5 +212,6 @@ router.delete('/:songId', requireAuth, async (req: CustomeRequest, res: Response
         next(error)
     }
 })
-
+  
+  
 export = router
