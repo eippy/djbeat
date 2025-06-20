@@ -33,25 +33,25 @@ app.use(
 );
 
 //apply middleware to allow for usage of static react-vite from build
-app.use(express.static(path.join(__dirname, "react-vite")));
-app.use(express.static(path.join(__dirname, 'react-vite/assets/favicon.ico')));
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+app.use(express.static(path.join(__dirname, '../../frontend/dist/assets/favicon.ico')));
 
 //api routes
 app.use(routes);
 
 //send the react build as a static file
 app.get('/', (_req: Request, res: Response, _next) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
 });
 //send the react build as a static file
 app.get('/favicon.ico', (_req, res, _next) => {
-    res.sendFile(path.join(__dirname, '/favicon.ico'));
+    res.sendFile(path.join(__dirname, '../../frontend/dist/favicon.ico'));
 });
 
 app.get(/^(?!\/?api).*/, (req:Request, res:Response) => {
     res.cookie('XSRF-TOKEN', req.csrfToken());
     res.sendFile(
-        path.join(__dirname, 'react-app', 'index.html')
+        path.join(__dirname, '../../frontend/dist/index.html')
     );
 });
 
