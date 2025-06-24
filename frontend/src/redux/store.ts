@@ -7,9 +7,11 @@ import {
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import songsReducer from "./songs";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
+  songs: songsReducer
 });
 
 
