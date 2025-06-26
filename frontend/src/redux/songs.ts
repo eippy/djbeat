@@ -133,7 +133,8 @@ export const deleteSongThunk = (songId: number): any => async (dispatch: any) =>
 //INTIAL STATE
 const initialState: ISongState = {
     byId: {},
-    allSongs: []
+    allSongs: [],
+    currentSong: null
 };
 
 //REDUCER
@@ -155,7 +156,7 @@ function songsReducer(state = initialState, action: IActionCreator) {
         
         case GET_SONG_DETAILS:
             newState = { ...state };
-            newState.allSongs = [action.payload];
+            newState.currentSong = action.payload;
             newState.byId[action.payload.id] = action.payload;
             return newState;
         

@@ -30,6 +30,7 @@ export interface ISongState {
         [id: number]: ISong
     }
     allSongs: ISong[];
+    currentSong: ISong | null;
 }
 
 export interface IActionCreator {

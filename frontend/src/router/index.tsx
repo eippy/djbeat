@@ -2,7 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
-import SongList from '../components/SongList';
+import SongList from '../components/SongList/SongList';
+import SongDetails from '../components/SongDetail';
 
 export const router = createBrowserRouter([
   {
@@ -10,7 +11,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Welcome!</h1>,
+        element: <SongList/>,
       },
       {
         path: "login",
@@ -21,9 +22,9 @@ export const router = createBrowserRouter([
         element: <SignupFormPage />,
       },
       {
-        path: "songs",
-        element: <SongList />
-      }
+        path: "songs/:songId",
+        element: <SongDetails />
+      },
     ],
   },
 ]);

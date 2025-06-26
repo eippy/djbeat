@@ -111,13 +111,23 @@ router.get('/:songId', async (req: Request, res: Response, next: NextFunction) =
     try {
         const { songId } = req.params;
         const song = await Song.findByPk(parseInt(songId), {
-            include: [
-                {
-                    model: User,
-                    as: 'User',
-                    attributes: ['id', 'username']
-                }
-            ]
+          include: [
+            {
+              model: User,
+              as: "User",
+              attributes: ["id", "username"],
+            },
+          ],
+          attributes: [
+            "id",
+            "title",
+            "description",
+            "duration",
+            "filepath",
+            "previewImage",
+            "createdAt",
+            "updatedAt",
+          ],
         });
         
         if (!song) {
@@ -136,7 +146,7 @@ router.get('/:songId', async (req: Request, res: Response, next: NextFunction) =
             duration: song.duration,
             createdAt: song.createdAt,
             updatedAt: song.updatedAt,
-            User: song.user
+            User: song.User
         }
         res.json(result);
     } catch (error) {
