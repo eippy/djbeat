@@ -4,10 +4,36 @@ const router = require('express').Router();
 const { Song, User } = db;
 import { check } from 'express-validator'
 import { handleValidationErrors } from "../../utils/validation";
-import { singleMulterUpload, singlePublicFileUpload } from "../../utils/aws-sdk";
+import { singlePublicFileUpload, singleMulterUpload} from '../../awsS3'
 import { CustomeRequest } from "../../typings/express";
+import { requireAuth } from "../../utils/auth";
+
 
 const validateCreateSong = [
+    check('title')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .isLength({ max: 100 })
+        .withMessage('Song title is required and must be less than 100 characters'),
+    check('description')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .isLength({ max: 500 })
+        .withMessage('Description is required and mus be less than 500 characters'),
+    check('previewImage')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .isURL()
+        .withMessage('Preview image must be a valid URL'),
+    check('songUrl')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .isURL()
+        .withMessage('Song URL is required and must be a valid URL'),
+    handleValidationErrors,
+]
+
+const validateUpdateSong = [
     check('title')
         .exists({ checkFalsy: true })
         .notEmpty()
@@ -27,11 +53,10 @@ const validateCreateSong = [
 ]
 
 // POST A SONG
-router.post('/', singleMulterUpload('songFile'), validateCreateSong, async (req: CustomeRequest, res: Response, next: NextFunction) => {
+router.post('/', validateCreateSong, async (req: CustomeRequest, res: Response, next: NextFunction) => {
     try {
-        const { title, description, previewImage } = req.body;
+        const { title, description, previewImage, songUrl } = req.body;
 
-                
         if (!req.user) {
             return res.status(401).json({
                 message: "Unauthorized"
@@ -39,21 +64,18 @@ router.post('/', singleMulterUpload('songFile'), validateCreateSong, async (req:
         }
         const ownerId = req.user.id;
 
-        if (!req.file) {
-            return res.status(400).json({
-                message: "Song file is required"
-            })
+        if (!songUrl) {
+          return res.status(400).json({
+            message: "Song URL is required",
+          });
         }
-
-        // send file to bucket
-        const filepath = await singlePublicFileUpload(req.file);
 
         const song = await Song.create({
             ownerId,
             title,
             description,
             previewImage,
-            filepath,
+            filepath: songUrl,
             duration: 0
         });
 
@@ -110,13 +132,23 @@ router.get('/:songId', async (req: Request, res: Response, next: NextFunction) =
     try {
         const { songId } = req.params;
         const song = await Song.findByPk(parseInt(songId), {
-            include: [
-                {
-                    model: User,
-                    as: 'User',
-                    attributes: ['id', 'username']
-                }
-            ]
+          include: [
+            {
+              model: User,
+              as: "User",
+              attributes: ["id", "username"],
+            },
+          ],
+          attributes: [
+            "id",
+            "title",
+            "description",
+            "duration",
+            "filepath",
+            "previewImage",
+            "createdAt",
+            "updatedAt",
+          ],
         });
         
         if (!song) {
@@ -135,13 +167,103 @@ router.get('/:songId', async (req: Request, res: Response, next: NextFunction) =
             duration: song.duration,
             createdAt: song.createdAt,
             updatedAt: song.updatedAt,
-            User: song.user
+            User: song.User
         }
         res.json(result);
     } catch (error) {
         next(error);
     }
+});
+  
+// EDIT A SONG 
+
+
+router.put('/:songId', requireAuth, validateUpdateSong, async (req: CustomeRequest, res: Response, next: NextFunction) => {
+    const { songId } = req.params;
+    const { title, description, previewImage } = req.body;
+
+    if (!req.user) {
+        return res.status(401).json({
+            message: "Unauthorized"
+        })
+    }
+
+    const songToUpdate = await Song.findByPk(songId);
+
+    if (!songToUpdate) {
+        return res.status(404).json({
+            message: "Song couldn't be found"
+        })
+    }
+
+    if (req.user.id !== songToUpdate.ownerId) {
+        return res.status(403).json({
+            message: "You do not own this song"
+        })
+    }
+
+    await songToUpdate.update({
+        title: title,
+        description: description,
+        previewImage: previewImage,
+    });
+
+    const updatedSong = await Song.findByPk(songId, {
+      include: [
+        {
+          model: User,
+          as: "User",
+          attributes: ["id", "username"],
+        },
+      ],
+      attributes: [
+        "id",
+        "title",
+        "description",
+        "duration",
+        "filepath",
+        "previewImage",
+        "createdAt",
+        "updatedAt",
+      ],
+    });
+    return res.status(200).json(updatedSong)
 })
 
 
-export = router
+
+// DELETE A SONG
+router.delete('/:songId', requireAuth, async (req: CustomeRequest, res: Response, next: NextFunction) => {
+    try {
+        const { songId } = req.params;
+        if (!req.user) {
+            return res.status(404).json({
+                message: "Unauthorized"
+            })
+        }
+
+        const songToDelete = await Song.findByPk(songId);
+
+        if (!songToDelete) {
+            return res.status(404).json({
+                message: "Song couldn't be found"
+            })
+        }
+
+        if (req.user.id !== songToDelete.ownerId) {
+            return res.status(403).json({
+                message: "You do not own this song"
+            });
+        }
+
+        await songToDelete.destroy();
+
+        return res.status(200).json({
+            message: "Successfully deleted"
+        })
+    } catch (error) {
+        next(error)
+    }
+})
+
+    export = router
