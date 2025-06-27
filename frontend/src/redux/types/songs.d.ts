@@ -18,7 +18,7 @@ export interface ICreateSong {
     title: string;
     description: string;
     previewImage: string;
-    songFile: File;
+    songUrl: string;
 }
 
 export interface IDeleteSong {
@@ -30,6 +30,7 @@ export interface ISongState {
         [id: number]: ISong
     }
     allSongs: ISong[];
+    currentSong: ISong | null;
 }
 
 export interface IActionCreator {

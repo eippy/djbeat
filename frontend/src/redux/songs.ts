@@ -72,19 +72,19 @@ export const getSongDetailsThunk = (songId: number): any => async (dispatch: any
     }
 }
 
-export const createSongThunk = (song: FormData): any => async (dispatch: any) => {
+export const createSongThunk = (song: any): any => async (dispatch: any) => {
     try {
         const res = await csrfFetch("/api/songs", {
             method: "POST",
-            headers: { "Content-Type": "application/json"},
-            body: song
-        })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(song)
+        });
         if (res.ok) {
             const data = await res.json();
             if (data.errors) {
                 throw res;
             }
-            dispatch(createSong(data))
+            dispatch(createSong(data));
             return data;
         } else {
             throw res;
@@ -92,14 +92,14 @@ export const createSongThunk = (song: FormData): any => async (dispatch: any) =>
     } catch (e) {
         const err = e as Response;
         return (await err.json());
-   }
-}
-export const updateSongThunk = (songId: number, song: FormData): any => async (dispatch: any) => {
+    }
+};
+export const updateSongThunk = (songId: number, song: FormData | any): any => async (dispatch: any) => {
     try {
         const res = await csrfFetch(`/api/songs/${songId}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json"},
-            body: song
+             headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(song) 
         })
         if (res.ok) {
             const data: ISong = await res.json();
@@ -133,7 +133,8 @@ export const deleteSongThunk = (songId: number): any => async (dispatch: any) =>
 //INTIAL STATE
 const initialState: ISongState = {
     byId: {},
-    allSongs: []
+    allSongs: [],
+    currentSong: null
 };
 
 //REDUCER
@@ -155,7 +156,7 @@ function songsReducer(state = initialState, action: IActionCreator) {
         
         case GET_SONG_DETAILS:
             newState = { ...state };
-            newState.allSongs = [action.payload];
+            newState.currentSong = action.payload;
             newState.byId[action.payload.id] = action.payload;
             return newState;
         
@@ -171,6 +172,9 @@ function songsReducer(state = initialState, action: IActionCreator) {
                 song.id === action.payload.id ? action.payload : song
             );
             newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
+            if (newState.currentSong && newState.currentSong.id === action.payload.id) {
+                newState.currentSong = action.payload;
+            }
             return newState;
         
         case DELETE_SONG:
