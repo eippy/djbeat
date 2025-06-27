@@ -122,6 +122,7 @@ export const deleteSongThunk = (songId: number): any => async (dispatch: any) =>
         })
         if (res.ok) {
             dispatch(deleteSong(songId))
+            return { success: true}
         } else {
             throw res;
         }
