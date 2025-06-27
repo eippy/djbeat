@@ -76,7 +76,7 @@ function SongForm() {
 
     try {
       const res = await dispatch(createSongThunk(songData));
-        if (res && res.id && !isNaN(res.id)) {
+        if (!res.error) {
           await dispatch(getAllSongsThunk());
           navigate(`/songs/${res.id}`);
         } else {
