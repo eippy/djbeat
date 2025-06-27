@@ -3,7 +3,7 @@
 // ---- general types ----
 export interface CSRFHttpOptions {
     method: string;
-    headers: any;
+    headers?: any;
     body?: string | FormData;
 };
 
