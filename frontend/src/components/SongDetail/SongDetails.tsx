@@ -6,6 +6,8 @@ import { RootState } from '../../redux/store'
 import SongDetailsCard from './SongDetailsCard'
 import OpenModalButton from '../OpenModalButton'
 import UpdateSongFormModal from '../UpdateSongFormModal'
+import DeleteSongModal from '../DeleteSongModal'
+import './SongDetails.css'
 
 function SongDetails() {
     const { songId } = useParams();
@@ -33,10 +35,16 @@ function SongDetails() {
         <div className="song-details-container">
             <SongDetailsCard song={song} />
             {user && song && user.id === song.User?.id && (
-                <OpenModalButton
-                    buttonText="Edit Song"
-                    modalComponent={<UpdateSongFormModal songId={song.id}/>}
-                />
+                <div className="song-actions">
+                    <OpenModalButton
+                        buttonText="Edit Song"
+                        modalComponent={<UpdateSongFormModal songId={song.id}/>}
+                    />
+                    <OpenModalButton
+                        buttonText="Delete Song"
+                        modalComponent={<DeleteSongModal songId={song.id}/>}
+                    />
+                </div>
             )}
         </div>
     )
