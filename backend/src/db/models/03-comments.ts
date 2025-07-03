@@ -40,11 +40,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
         {
             sequelize,
             modelName: 'Comment',
-            defaultScope: {
-                attributes: {
-                    exclude: ['createdAt', 'updatedAt']
-                }
-            }
+           
         }
     );
 

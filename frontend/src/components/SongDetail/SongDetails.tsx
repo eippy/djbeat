@@ -7,7 +7,7 @@ import SongDetailsCard from './SongDetailsCard'
 import OpenModalButton from '../OpenModalButton'
 import UpdateSongFormModal from '../UpdateSongFormModal'
 import DeleteSongModal from '../DeleteSongModal'
-import './SongDetails.css'
+import CommentList from '../CommentList'
 
 function SongDetails() {
     const { songId } = useParams();
@@ -35,18 +35,19 @@ function SongDetails() {
         <div className="song-details-container">
             <SongDetailsCard song={song} />
             {user && song && user.id === song.User?.id && (
-                <div className="song-actions">
-                    <OpenModalButton
-                        buttonText="Edit Song"
-                        modalComponent={<UpdateSongFormModal songId={song.id}/>}
+                <div>
+                <OpenModalButton
+                    buttonText="Edit Song"
+                    modalComponent={<UpdateSongFormModal songId={song.id}/>}
+                />
+                <OpenModalButton
+                    buttonText="Delete Song"
+                    modalComponent={<DeleteSongModal songId={song.id}/>}
                     />
-                    <OpenModalButton
-                        buttonText="Delete Song"
-                        modalComponent={<DeleteSongModal songId={song.id}/>}
-                    />
-                </div>
+                    </div>
             )}
-        </div>
+            <CommentList songId={song?.id}/>
+            </div>
     )
 }
 
