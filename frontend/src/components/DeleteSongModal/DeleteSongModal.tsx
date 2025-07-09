@@ -24,15 +24,17 @@ const DeleteSongModal: React.FC<DeleteSongModalProps> = ({ songId }) => {
   
 
   return (
-    <div className="review-form-container">
+    <div className="delete-song-container">
         <h1 id="heading">Confirm Delete</h1>
-        <div>Are you sure you want to delete this song?</div>
+          <div>Are you sure you want to delete this song?</div>
+          <div className="delete-song-buttons">
         <button onClick={handleDelete} className="delete-review-button">
             Yes
         </button>
         <button onClick={closeModal} className="keep-review-button">
             No
-        </button>
+          </button>
+    </div>
     </div>
 );
 };

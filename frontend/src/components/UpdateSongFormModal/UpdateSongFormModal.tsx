@@ -3,7 +3,7 @@ import { Navigate} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { updateSongThunk, getSongDetailsThunk } from "../../redux/songs";
 import { RootState } from "../../redux/store";
-import "../SongForm/SongForm.css"
+import "./UpdateSongFormModal.css"
 import { useModal } from "../../context/Modal";
 
 interface ISongErrors {
@@ -104,7 +104,7 @@ function UpdateSongFormModal({ songId }: UpdateSongFormModalProps) {
     }
 
     return (
-        <>
+        <div className="update-modal-container">
       <h1>Edit Song</h1>
 
       <form onSubmit={handleSubmit}>
@@ -161,7 +161,7 @@ function UpdateSongFormModal({ songId }: UpdateSongFormModalProps) {
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
     
 }

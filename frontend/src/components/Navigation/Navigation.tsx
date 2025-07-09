@@ -1,28 +1,24 @@
 import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 
 function Navigation(): JSX.Element {
-  const user = useSelector((state: RootState) => state.session.user)
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      <li>
-        {user && (
-          <li>
-            <NavLink to="/songs/new">Upload</NavLink>
-          </li>
-      )}
-        
-      </li>
-      <li>
-        <ProfileButton />
-      </li>
-    </ul>
+    <nav className="navigation">
+      <div className="nav-container">
+        <div className="nav-left">
+          <NavLink to="/" className="logo-link">
+            <img src="/dj-logo.jpg" alt="Home" className="nav-logo" />
+          </NavLink>
+        </div>
+        <div className="right-nav">
+          <NavLink to="/songs/new" className="upload-button">
+            Upload
+          </NavLink>
+          <ProfileButton />
+        </div>
+      </div>
+    </nav>
   );
 }
 

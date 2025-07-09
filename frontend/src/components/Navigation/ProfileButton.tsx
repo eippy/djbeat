@@ -6,6 +6,7 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { useAppSelector } from "../../redux/store";
+import "./ProfileButton.css"
 
 function ProfileButton():JSX.Element {
   const dispatch = useDispatch();
@@ -41,37 +42,41 @@ function ProfileButton():JSX.Element {
   };
 
   return (
-    <>
-      <button onClick={(e) => toggleMenu(e)}>
+    <div className="profile-button-container">
+      <button className="profile-button" onClick={(e) => toggleMenu(e)}>
         <FaUserCircle />
       </button>
       {showMenu && (
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li>
+            <li className="list-div-element">{user.username}</li>
+            <li className="list-div-element">{user.email}</li>
+            <li className="logout-button-container">
                 <button onClick={(e) => logout(e)}>Log Out</button>
               </li>
             </>
           ) : (
-            <>
+              <>
+                <li className="log-in-button-container">
               <OpenModalMenuItem
                 itemText="Log In"
                 onItemClick={closeMenu}
                 modalComponent={<LoginFormModal />}
-              />
+                  />
+                </li>
+                <li className="sign-up-button-container">
               <OpenModalMenuItem
                 itemText="Sign Up"
                 onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
-              />
+                  />
+                  </li>
             </>
           )}
         </ul>
       )}
-    </>
+    </div>
   );
 }
 

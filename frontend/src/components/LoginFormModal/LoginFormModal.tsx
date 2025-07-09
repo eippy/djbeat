@@ -34,9 +34,27 @@ function LoginFormModal():JSX.Element {
     }
   };
 
+  const handleDemoLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    return dispatch(
+      thunkLogin({
+        email: 'demo@aa.io',
+        password: 'password',
+      })
+    )
+      .then(closeModal)
+      .catch(async (res: any) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
+  };
+
   return (
-    <>
+    <div className="login-form-container">
       <h1>Log In</h1>
+      {errors.email && <p className="error">{errors.email}</p>}
       <form onSubmit={(e) => handleSubmit(e)}>
         <label>
           Email
@@ -47,7 +65,6 @@ function LoginFormModal():JSX.Element {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
         <label>
           Password
           <input
@@ -57,10 +74,13 @@ function LoginFormModal():JSX.Element {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
+        {errors.password && <p className="error">{errors.password}</p>}
+        <button type="submit" className="log-in-button">Log In</button>
+        <button type="button" onClick={handleDemoLogin} className="demo-link">
+          Demo User
+        </button>
       </form>
-    </>
+    </div>
   );
 }
 

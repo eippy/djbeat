@@ -40,32 +40,23 @@ function SongDetailsCard({ song }: SongDetailsCardProp) {
 
     return (
       <div className="song-details-container">
-        <div className="song-details-container">
-          <h1 className="song-title">{song.title}</h1>
-          <p>By: {song.User?.username}</p>
+        <div className="song-image">
+          <img src={song.previewImage} alt={song.title} />
         </div>
-
-        <div className="song-player-section">
-          <div className="song-image">
-            <img src={song.previewImage} alt={song.title} />
-          </div>
-          <div className="media-player">
+        <div className="song-details-info">
+          <h1 className="song-title">{song.title}</h1>
+          <p className="song-artist">By: {song.User?.username}</p>
+          <div className="song-player">
             <audio controls>
               <source src={song.filepath} type="audio/mpeg" />
             </audio>
           </div>
-        </div>
-        <div className="song-info">
+          <div className="song-details">
+            <p>Uploaded: {formattedDate(song.createdAt)}</p>
+          </div>
           <div className="song-description">
             <h3>Description</h3>
             <p>{song.description}</p>
-          </div>
-
-          <div className="song-details">
-            <p>Duration: {song.duration} seconds</p>
-            <p>
-              Uploaded: {formattedDate(song.createdAt)}
-            </p>
           </div>
         </div>
       </div>

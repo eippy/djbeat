@@ -8,6 +8,7 @@ import OpenModalButton from '../OpenModalButton'
 import UpdateSongFormModal from '../UpdateSongFormModal'
 import DeleteSongModal from '../DeleteSongModal'
 import CommentList from '../CommentList'
+import './SongDetails.css'
 
 function SongDetails() {
     const { songId } = useParams();
@@ -35,7 +36,7 @@ function SongDetails() {
         <div className="song-details-container">
             <SongDetailsCard song={song} />
             {user && song && user.id === song.User?.id && (
-                <div>
+                <div className='modal-song-btns'>
                 <OpenModalButton
                     buttonText="Edit Song"
                     modalComponent={<UpdateSongFormModal songId={song.id}/>}
