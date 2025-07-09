@@ -1,0 +1,61 @@
+.song-details-container {
+    max-width: 700px;
+    margin: 60px auto 0 auto;
+    border-radius: 0;
+    padding: 0;
+  }
+  
+  .song-image img {
+    width: 140px;
+    height: 140px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .song-details-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+  }
+  
+  .song-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: #222;
+  }
+  
+  .song-artist {
+    font-size: 1rem;
+    color: #888;
+    margin: 0 0 8px 0;
+  }
+  
+  .song-player {
+    width: 100%;
+    max-width: 420px;
+  }
+  
+  .song-player audio {
+    width: 100%;
+  }
+  
+  .song-details {
+    color: #888;
+    font-size: 1rem;
+    margin-top: 8px;
+  }
+  
+  .song-description h3 {
+    margin: 0 0 4px 0;
+    font-size: 1.1rem;
+    color: #444;
+  }
+  
+  .song-description p {
+    margin: 0;
+    color: #666;
+    font-size: 1rem;
+  }
+

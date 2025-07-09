@@ -18,7 +18,6 @@ function SongCard({ song }: SongCardProp ) {
             </div>
             <div className="song-information">
                 <h2 className="song-title"> {song.title}</h2>
-                <p className="song-description">{song.description}</p>
                 <p className="song-artist">By: {song.User?.username}</p>
                 <p className="song-duration">Duration: {song.duration}s</p>
                 <div className="song-audio">

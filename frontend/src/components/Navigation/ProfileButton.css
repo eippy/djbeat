@@ -1,0 +1,54 @@
+.profile-button-container {
+  position: relative;
+}
+
+.profile-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.profile-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-width: 150px;
+}
+
+.profile-dropdown li {
+  list-style: none;
+  margin: 5px 0;
+}
+
+.list-div-element {
+  color: #666;
+}
+
+.logout-button-container button {
+  background: black;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.logout-button-container button:hover {
+  background: #333;
+}
+
+.log-in-button-container button,
+.sign-up-button-container button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+

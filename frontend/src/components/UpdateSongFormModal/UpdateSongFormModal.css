@@ -1,0 +1,86 @@
+.update-modal-container {
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    border: 1px solid #eee;
+  }
+  
+  .update-modal-container h1 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+    color: #222;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  .form-section {
+    width: 100%;
+    margin-bottom: 0;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+  }
+  
+  label {
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 2px;
+    font-size: 1rem;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .song-form-error {
+    color: #dc3545;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  
+  .form-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  
+  .song-form-button,
+  .cancel-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .song-form-button {
+    background: #222;
+    color: #fff;
+  }
+  
+  .song-form-button:hover {
+    background: #444;
+  }
+  
+  .cancel-button {
+    background: #f4f4f4;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+  
+  .cancel-button:hover {
+    background: #e0e0e0;
+  }

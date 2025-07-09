@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteCommentThunk } from '../../redux/comments';
 import { useModal } from '../../context/Modal';
+import './DeleteCommentModal.css'
 
 interface DeleteCommentModalProps {
   commentId: number;
@@ -18,12 +19,12 @@ function DeleteCommentModal({ commentId }: DeleteCommentModalProps) {
   };
 
   return (
-    <div>
-      <h2>Delete Comment</h2>
+    <div className='delete-comment-container'>
+      <h2 className='delete-comment-title'>Delete Comment</h2>
       <p>Are you sure you want to delete this comment?</p>
       <div>
-        <button onClick={handleDelete} >Delete</button>
-        <button onClick={closeModal} >Cancel</button>
+        <button onClick={handleDelete} className='delete-comment-button'>Delete</button>
+        <button onClick={closeModal} className='delete-comment-cancel'>Cancel</button>
       </div>
     </div>
   );

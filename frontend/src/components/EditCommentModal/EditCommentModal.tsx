@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { updateCommentThunk } from '../../redux/comments';
 import { useModal } from '../../context/Modal';
 import { IComment } from '../../redux/types/comments';
+import './EditCommentModal.css'
 
 interface EditCommentModalProps {
   comment: IComment;
@@ -29,19 +30,20 @@ function EditCommentModal({ comment }: EditCommentModalProps) {
   };
 
   return (
-    <div>
-      <h2>Edit Comment</h2>
+    <div className='edit-comment-container'>
+      <h2 className='edit-comment-title'>Edit Comment</h2>
       <form onSubmit={handleSubmit}>
         <textarea
+          className='edit-textarea'
           value={text}
           onChange={e => setText(e.target.value)}
           maxLength={1000}
           rows={4}
         />
-        {error && <div>{error}</div>}
+        {error && <div className='error'>{error}</div>}
         <div>
-          <button type="submit">Update</button>
-          <button type="button" onClick={closeModal}>Cancel</button>
+          <button type="submit" className='edit-confirm-button'>Update</button>
+          <button type="button" onClick={closeModal} className='edit-cancel-button'>Cancel</button>
         </div>
       </form>
     </div>
