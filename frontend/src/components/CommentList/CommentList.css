@@ -1,0 +1,44 @@
+.comments-container {
+    max-width: 700px;
+    padding: 0 0 32px 0;
+  }
+  
+  .comment-form-section {
+    margin-bottom: 24px;
+  }
+  
+  .comment-form textarea {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    margin-bottom: 8px;
+  }
+  
+  .form-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .post-button {
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+
+  }
+  
+  .post-button:disabled {
+    background: #dfdfdf;
+    cursor: not-allowed;
+  }
+  
+  .comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }

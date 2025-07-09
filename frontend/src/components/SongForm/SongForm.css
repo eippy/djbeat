@@ -1,0 +1,61 @@
+.create-song-container {
+    max-width: 450px;
+    margin: 60px auto 0 auto;
+    background: white;
+    border-radius: 8px;
+    padding: 32px 24px;
+  }
+  
+  .create-song-container h1 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #222;
+  }
+  
+  .form-section {
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  label {
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 2px;
+  }
+  
+  
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .song-form-error {
+    color: red;
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  .song-form-button {
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    width: 100%;
+  }
+  
+  .song-form-button:hover {
+    background: grey;
+  }
