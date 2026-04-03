@@ -13,8 +13,8 @@ Full-stack music discovery app: browse tracks, open a detail page with playback 
 
 DJBeat is a single-page application. The **React + TypeScript** client uses **Redux** for session and data fetching, **React Router** for views, and **Vite** for development and production builds. The **Express + TypeScript** API uses **Sequelize** with **PostgreSQL** in production and **SQLite** for local development, **cookie-based sessions**, **bcrypt** for passwords, and **CSRF** protection on mutating requests.
 
-**Live:** _add your deployed URL_  
-**Repo:** _add your GitHub URL if this file is reused elsewhere_
+**Live:** [_add your deployed URL_](https://djbeat.onrender.com/)  
+
 
 ### Tech stack
 
